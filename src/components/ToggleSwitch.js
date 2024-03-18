@@ -14,12 +14,13 @@ function ToggleSwitch() {
   }
 
   return (
-    <div>
-      <ReactSwitch
-        checked={checked}
-        onChange={handlechange}
-      />
-    </div>
+
+    
+          <label className='w-fit flex gap-2 mx-auto mt-8 border border-gray-400 rounded-xl px-3 py-3 cursor-pointer min-[950px]:mx-[249px]'>
+            <div className='font-fredoka text-lg'>Display total after taxes</div>
+            <ReactSwitch checked={checked} onChange={handlechange} className="-z-10" />
+          </label>
+    
   );
 }
 

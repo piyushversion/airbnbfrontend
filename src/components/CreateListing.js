@@ -4,6 +4,7 @@ import {useContext,useEffect, useState} from "react";
 import {toast} from "react-hot-toast";
 import{useNavigate} from "react-router-dom";
 import Spinner from "./Spinner";
+import Footer from "./Footer";
 
 function CreateListing(){
 
@@ -79,12 +80,12 @@ function CreateListing(){
 
         try{
 
-            const response = await fetch("https://airbnbbackend-2.onrender.com/listing",{
+            const response = await fetch("https://airbnbbackend1.onrender.com/listing",{
 
                 method:"POST",
                 headers:{
 
-                    "Authorization" : `Bearer ${sessionStorage.getItem("token")}`
+                    "Authorization" : `Bearer ${localStorage.getItem("token")}`
                 },
                 body:formData
             })   
@@ -190,62 +191,76 @@ function CreateListing(){
 
             loading ? <Spinner></Spinner> : 
 
-            <div>
+            <div className="font-fredoka w-[70%] mx-auto mt-[90px] min-[500px]:w-[65%] min-[800px]:w-[50%]">
 
-                <form method="POST" onSubmit={submithandler}>
+                <div className="text-[23px] my-5 min-[450px]:text-3xl">Create a New Listing</div>
+
+                <form method="POST" onSubmit={submithandler} className="flex flex-col gap-3">
                     
-                    <label htmlFor="title">Title : </label>
-                    <input type="text" name="title" className="border-2 outline-0" onChange={changehandler}></input>
+                    <div className="flex flex-col">
+                        <span className="text-lg">Title</span>
+                        <input type="text" autoComplete="off" placeholder="Add a catchy title" name="title" className="border-2 outline-0 pl-1.5 py-1 duration-200 focus:border-2 focus:border-[#A6C6F5]" onChange={changehandler}></input>
+                    </div>
 
-                    <br></br>
 
-                    <label htmlFor="description">Description : </label>
-                    <input type="text" name="description" className="border-2 outline-0" onChange={changehandler}></input>
+                    <div className="flex flex-col">
+                        <span className="text-lg">Description</span>
+                        <textarea className="border-2 outline-0 duration-200 focus:border-2 focus:border-[#A6C6F5]" name="description" onChange={changehandler}></textarea>
+                    </div>
+                        
 
-                    <br></br>
+                    <div className="flex flex-col">
+                        <span className="text-lg">Upload Image</span>
+                        <input type="file" name="file" className="border-2 outline-0 duration-200 focus:border-2 focus:border-[#A6C6F5]" onChange={changehandler}></input>
+                    </div>
 
-                    <label htmlFor="file">File : </label>
-                    <input type="file" name="file" className="border-2 outline-0" onChange={changehandler}></input>
 
-                    <br></br>
+                    <div className="flex gap-0.5 flex-col min-[800px]:flex-row min-[800px]:gap-3">
 
-                    <label htmlFor="tag">Category : </label>
-                    <select name="tag" className="border-2 outline-0" onChange={changehandler}>
+                        <span className="text-lg">Select Category</span>
+                        <select name="tag" className="border-2 outline-0 overflow-scroll" onChange={changehandler}>
 
-                        <option>--Select the category of listing--</option>
-                        <option value="room">Rooms</option>
-                        <option value="house">Houses</option>
-                        <option value="bungalow">Bungalow</option>
-                        <option value="swimmingpool">Pools</option>
-                        <option value="boat">Boats</option>
-                        <option value="camping">Camping</option>
-                        <option value="island">Islands</option>
-                        <option value="farm">Farms</option>
-                        <option value="treehouse">Treehouses</option>
-                        <option value="beach">Beachs</option>
-                    </select>
+                            <option disabled selected>--Select the category of listing--</option>
+                            <option value="room">Rooms</option>
+                            <option value="house">Houses</option>
+                            <option value="bungalow">Bungalow</option>
+                            <option value="swimmingpool">Pools</option>
+                            <option value="boat">Boats</option>
+                            <option value="camping">Camping</option>
+                            <option value="island">Islands</option>
+                            <option value="farm">Farms</option>
+                            <option value="treehouse">Treehouses</option>
+                            <option value="beach">Beachs</option>
+                        </select>
+                    </div>
 
-                    <br></br>
 
-                    <label htmlFor="price">Price : </label>
-                    <input type="text" name="price" className="border-2 outline-0" onChange={changehandler}></input>
+                    <div className="flex gap-1 flex-col min-[650px]:flex-row min-[650px]:gap-4">
 
-                    <br></br>
+                        <div className="flex flex-col">
+                            <span className="text-lg">Price</span>
+                            <input type="text" placeholder="1200" name="price" className="border-2 outline-0 pl-1.5 py-1 duration-200 focus:border-2 focus:border-[#A6C6F5]" autoComplete="off" onChange={changehandler}></input>
+                        </div>
 
-                    <label htmlFor="country">Country : </label>
-                    <input type="text" name="country" className="border-2 outline-0" onChange={changehandler}></input>
 
-                    <br></br>
+                        <div className="flex flex-col w-full">
+                            <span className="text-lg">Country</span>
+                            <input type="text" name="country" placeholder="India" className="border-2 outline-0 pl-1.5 py-1 duration-200 focus:border-2 focus:border-[#A6C6F5]" autoComplete="off" onChange={changehandler}></input>
+                        </div>
+                    </div>
 
-                    <label htmlFor="location">Location : </label>
-                    <input type="text" name="location" className="border-2 outline-0" onChange={changehandler}></input>
 
-                    <br></br>
+                    <div className="flex flex-col">
+                        <span className="text-lg">Location</span>
+                        <input type="text" name="location" className="border-2 outline-0 pl-1.5 py-1 duration-200 focus:border-2 focus:border-[#A6C6F5]" placeholder="Bhilai, Chattisgarh" autoComplete="off" onChange={changehandler}></input>
+                    </div>
 
-                    <input type="submit" value="Add"></input>
+
+                    <input type="submit" value="Add" className="self-start bg-[#fe424d] text-white cursor-pointer rounded-md px-5 py-1.5 mb-3 mx-auto min-[450px]:mx-0 duration-200 focus:border-2 focus:border-[#A6C6F5]"></input>
                 </form>
             </div>
             }
+            <Footer></Footer>
         </div>
     )
 }

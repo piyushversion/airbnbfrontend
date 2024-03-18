@@ -5,6 +5,8 @@ import{useNavigate} from "react-router-dom";
 import Spinner from "./Spinner";
 import { useLocation } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 
 function Edit(){
@@ -87,12 +89,12 @@ function Edit(){
 
         try{
 
-            const response = await fetch(`https://airbnbbackend-2.onrender.com/editlisting/${id}`,{
+            const response = await fetch(`https://airbnbbackend1.onrender.com/editlisting/${id}`,{
 
                 method:"POST",
                 headers:{
 
-                    "Authorization" : `Bearer ${sessionStorage.getItem("token")}`
+                    "Authorization" : `Bearer ${localStorage.getItem("token")}`
                 },
                 body:formData
             })   
@@ -185,7 +187,7 @@ function Edit(){
 
         try{
 
-            const res = await fetch(`https://airbnbbackend-2.onrender.com/getspecifiedlistingid/${id}`,{
+            const res = await fetch(`https://airbnbbackend1.onrender.com/getspecifiedlistingid/${id}`,{
 
                 method:"GET",
                 headers:{
@@ -228,69 +230,82 @@ function Edit(){
     return (
 
         <div>
+            
+            <Navbar></Navbar>
 
             {
 
             loading ? <Spinner></Spinner> : 
 
-            <div>
+            <div className="font-fredoka w-[70%] mx-auto mt-[90px] min-[500px]:w-[65%] min-[800px]:w-[50%]">
 
-                <form method="POST" onSubmit={submithandler}>
+                <div className="text-[23px] my-5 min-[450px]:text-3xl">Edit Your Listing</div>
+
+                <form method="POST" onSubmit={submithandler} className="flex flex-col gap-3">
                     
-                    <label htmlFor="title">Title : </label>
-                    <input type="text" name="title" className="border-2 outline-0" onChange={changehandler} placeholder={`${data.title}`}></input>
+                    <div className="flex flex-col">
+                        <span className="text-lg">Title</span>
+                        <input type="text" name="title" className="border-2 outline-0 pl-1.5 py-1 duration-200 focus:border-2 focus:border-[#A6C6F5]" onChange={changehandler} placeholder={`${data.title}`}></input>
+                    </div>
 
-                    <br></br>
+                    <div className="flex flex-col">
 
-                    <label htmlFor="description">Description : </label>
-                    <input type="text" name="description" className="border-2 outline-0" onChange={changehandler} placeholder={`${data.description}`}></input>
+                        <span className="text-lg">Description</span>
+                        <input type="text" name="description" autoComplete="off" className="border-2 outline-0 pl-1.5 py-1 duration-200 focus:border-2 focus:border-[#A6C6F5]" onChange={changehandler} placeholder={`${data.description}`}></input>
+                    </div>
 
-                    <br></br>
+                    <div className="flex flex-col">
 
-                    <img src={data.imageurl} width="100px"></img>
+                        <span className="text-lg">Original Listing Image</span>
+                        <img src={data.imageurl} width="50%"></img>
+                    </div>
 
-                    <label htmlFor="file">File : </label>
-                    <input type="file" name="file" className="border-2 outline-0" onChange={changehandler}></input>
+                    <div className="flex flex-col">
+                        <span className="text-lg">Upload New Image</span>
+                        <input type="file" name="file" className="border-2 outline-0 duration-200 focus:border-2 focus:border-[#A6C6F5]" onChange={changehandler}></input>
+                    </div>
 
-                    <br></br>
+                    <div className="flex gap-0.5 flex-col min-[800px]:flex-row min-[800px]:gap-3">
+                        <span className="text-lg">Select Category</span>
+                        <select name="tag" className="border-2 outline-0" onChange={changehandler}>
 
-                    <label htmlFor="tag">Category : </label>
-                    <select name="tag" className="border-2 outline-0" onChange={changehandler}>
+                            <option>--Select the category of listing--</option>
+                            <option value="room">Rooms</option>
+                            <option value="house">Houses</option>
+                            <option value="bungalow">Bungalow</option>
+                            <option value="swimmingpool">Pools</option>
+                            <option value="boat">Boats</option>
+                            <option value="camping">Camping</option>
+                            <option value="island">Islands</option>
+                            <option value="farm">Farms</option>
+                            <option value="treehouse">Treehouses</option>
+                            <option value="beach">Beachs</option>
+                        </select>
+                    </div>
 
-                        <option>--Select the category of listing--</option>
-                        <option value="room">Rooms</option>
-                        <option value="house">Houses</option>
-                        <option value="bungalow">Bungalow</option>
-                        <option value="swimmingpool">Pools</option>
-                        <option value="boat">Boats</option>
-                        <option value="camping">Camping</option>
-                        <option value="island">Islands</option>
-                        <option value="farm">Farms</option>
-                        <option value="treehouse">Treehouses</option>
-                        <option value="beach">Beachs</option>
-                    </select>
+                    <div className="flex gap-1 flex-col min-[650px]:flex-row min-[650px]:gap-4">
+                        <div className="flex flex-col">
+                            <span className="text-lg">Price</span>
+                            <input type="text" name="price" className="border-2 outline-0 pl-1.5 py-1 duration-200 focus:border-2 focus:border-[#A6C6F5]" autoComplete="off" onChange={changehandler} placeholder={`${data.price}`}></input>
+                        </div>
 
-                    <br></br>
+                        <div className="flex flex-col w-full">
+                            <span className="text-lg">Country</span>
+                            <input type="text" name="country" className="border-2 outline-0 pl-1.5 py-1 duration-200 focus:border-2 focus:border-[#A6C6F5]" autoComplete="off" onChange={changehandler} placeholder={`${data.country}`}></input>
+                        </div>
+                    </div>
 
-                    <label htmlFor="price">Price : </label>
-                    <input type="text" name="price" className="border-2 outline-0" onChange={changehandler} placeholder={`${data.price}`}></input>
+                    <div className="flex flex-col">
+                        <span className="text-lg">Location</span>
+                        <input type="text" name="location" className="border-2 outline-0 pl-1.5 py-1 duration-200 focus:border-2 focus:border-[#A6C6F5]" autoComplete="off" onChange={changehandler} placeholder={`${data.location}`}></input>
+                    </div>
 
-                    <br></br>
 
-                    <label htmlFor="country">Country : </label>
-                    <input type="text" name="country" className="border-2 outline-0" onChange={changehandler} placeholder={`${data.country}`}></input>
-
-                    <br></br>
-
-                    <label htmlFor="location">Location : </label>
-                    <input type="text" name="location" className="border-2 outline-0" onChange={changehandler} placeholder={`${data.location}`}></input>
-
-                    <br></br>
-
-                    <input type="submit" value="Edit"></input>
+                    <input type="submit" value="Edit" className="self-start bg-[#fe424d] text-white cursor-pointer rounded-md px-5 py-1.5 mb-3 mx-auto min-[450px]:mx-0 duration-200 focus:border-2 focus:border-[#A6C6F5]"></input>
                 </form>
             </div>
             }
+            <Footer></Footer>
         </div>
     )
 }

@@ -14,21 +14,23 @@ export function AppContextProvider(props){
 
     const[loading,setLoading] = useState(false);
 
-    const[token,setToken] = useState(sessionStorage.getItem("token"));
+    const[token,setToken] = useState(localStorage.getItem("token"));
 
     function setsessionStorage(token){
 
-        sessionStorage.setItem("token",token);
-        setToken(sessionStorage.getItem("token"));
+        localStorage.setItem("token",token);
+        setToken(localStorage.getItem("token"));
     }
 
     function clearsessionStorage(){
 
         setToken(null);
-        sessionStorage.clear();
+        localStorage.clear();
     }
 
-    let login = !! token;
+    let login = !! localStorage.getItem("token");
+    console.log(login)
+    console.log(localStorage.getItem("token"))
 
 
     const[alllisting,setAllListing] = useState([]);
@@ -37,7 +39,7 @@ export function AppContextProvider(props){
 
         setLoading(true);
 
-        const response = await fetch("https://airbnbbackend-2.onrender.com/getalllisting",{
+        const response = await fetch(`https://airbnbbackend1.onrender.com/getalllisting`,{
 
             method:"GET",
             headers:{
@@ -80,7 +82,7 @@ export function AppContextProvider(props){
 
         setLoading(true)
 
-        const response = await fetch(`https://airbnbbackend-2.onrender.com/getspecifiedlistingcat/${cat}`,{
+        const response = await fetch(`https://airbnbbackend1.onrender.com/getspecifiedlistingcat/${cat}`,{
 
             method:"GET",
             headers:{

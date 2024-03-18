@@ -23,12 +23,12 @@ function Rating({id,fetchalldetails}){
 
         try{
 
-            const response = await fetch(`https://airbnbbackend-2.onrender.com/ratingandreviews/${id}`,{
+            const response = await fetch(`https://airbnbbackend1.onrender.com/ratingandreviews/${id}`,{
 
                 method:"POST",
                 headers:{
 
-                    "Authorization" : `Bearer ${sessionStorage.getItem("token")}`
+                    "Authorization" : `Bearer ${localStorage.getItem("token")}`
                 },
                 body:formData
             })   
@@ -57,12 +57,12 @@ function Rating({id,fetchalldetails}){
 
     return(
 
-        <div>
+        <div className="my-6">
             <form onSubmit={submithandler}>
 
-                <h1>Leave a Review</h1>
-                <p>Rating</p>
-                <div className="flex">
+                <h1 className="text-3xl pb-3">Leave a Review</h1>
+                <p className="text-xl pb-3">Rating</p>
+                <div className="flex pb-3">
 
                     {[...Array(5)].map((element,index)=>{
                         
@@ -78,11 +78,12 @@ function Rating({id,fetchalldetails}){
                         )
                     })}
                 </div>
-                <label>Comments</label>
-                <br></br>
-                <textarea className="border-2 outline-0" onChange={changehandler}></textarea>
+                <div className="pb-3">
+                    <div className="text-xl">Comments</div>
+                    <textarea className="border-2 outline-0 w-full h-[100px] resize-none"  onChange={changehandler} maxLength="100"></textarea>
+                </div>
 
-                <input type="submit" value="Submit"></input>
+                <input type="submit" value="Submit" className="text-xl border border-black rounded-md px-6 py-1.5 cursor-pointer transition-all duration-200 hover:bg-black hover:text-white w-[100%] min-[400px]:w-fit"></input>
 
             </form>
         </div>

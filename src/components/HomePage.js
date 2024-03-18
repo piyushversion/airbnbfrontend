@@ -1,4 +1,4 @@
-import { useContext, useEffect} from "react";
+import { useContext, useEffect, useState} from "react";
 import { AppContext } from "../context/AppContext";
 import Navbar from "./Navbar";
 import { FaBed } from "react-icons/fa6";
@@ -15,12 +15,17 @@ import { FaUmbrellaBeach } from "react-icons/fa";
 import Card from "../components/Card";
 import Spinner from "./Spinner";
 import ToggleSwitch from "./ToggleSwitch";
+import Footer from "./Footer";
 
 function HomePage(){
+
+    const[color,setColor] = useState("all")
 
     const{fetchalllisting,alllisting,fetchspecifiedlisting,loading,setLoading} = useContext(AppContext);
     
     function filter(tagg){
+
+        setColor(tagg);
 
         if(tagg === "all"){
 
@@ -44,51 +49,51 @@ function HomePage(){
 
         <div>
             <Navbar></Navbar>
-            <div className="flex justify-center gap-6">
+            <div className="flex justify-center gap-7 mt-24 flex-wrap mx-6">
 
-                <div className="flex flex-col items-center cursor-pointer" onClick={()=>filter("all")}>
-                    <span><ImEarth></ImEarth></span>
-                    <span className="font-fredoka">All</span>
+                <div className="flex flex-col items-center cursor-pointer font-fredoka" onClick={()=>filter("all")}>
+                    <span className={color === "all" ? "text-[#fe4f4d]" : ""}><ImEarth></ImEarth></span>
+                    <span className={color==="all" ? "text-[#fe4f4d]" : "text-gray-600"}>All</span>
                 </div>
-                <div className="flex flex-col items-center cursor-pointer" onClick={()=>filter("room")}>
-                    <span><FaBed></FaBed></span>
-                    <span className="font-fredoka">Rooms</span>
+                <div className="flex flex-col items-center cursor-pointer font-fredoka" onClick={()=>filter("room")}>
+                    <span className={color === "room" ? "text-[#fe4f4d]" : ""}><FaBed></FaBed></span>
+                    <span className={color === "room"?"text-[#fe4f4d]":"text-gray-600"}>Rooms</span>
                 </div>
-                <div className="flex flex-col items-center cursor-pointer" onClick={()=>filter("house")}>
-                    <span><FaHouse></FaHouse></span>
-                    <span className="font-fredoka">Houses</span>
+                <div className="flex flex-col items-center cursor-pointer font-fredoka" onClick={()=>filter("house")}>
+                    <span className={color === "house" ? "text-[#fe4f4d]" : ""}><FaHouse></FaHouse></span>
+                    <span className={color === "house" ? "text-[#fe4f4d]" : "text-gray-600"}>Houses</span>
                 </div>
-                <div className="flex flex-col items-center cursor-pointer" onClick={()=>filter("bungalow")}>
-                    <span><MdBungalow></MdBungalow></span>
-                    <span className="font-fredoka">Bungalow</span>
+                <div className="flex flex-col items-center cursor-pointer font-fredoka" onClick={()=>filter("bungalow")}>
+                    <span className={color === "bungalow" ? "text-[#fe4f4d]" : ""}><MdBungalow></MdBungalow></span>
+                    <span className={color === "bungalow" ? "text-[#fe4f4d]" : "text-gray-600"}>Bungalow</span>
                 </div>
-                <div className="flex flex-col items-center cursor-pointer" onClick={()=>filter("swimmingpool")}>
-                    <span><LiaSwimmingPoolSolid></LiaSwimmingPoolSolid></span>
-                    <span className="font-fredoka">Pools</span>
+                <div className="flex flex-col items-center cursor-pointer font-fredoka" onClick={()=>filter("swimmingpool")}>
+                    <span className={color === "swimmingpool" ? "text-[#fe4f4d]" : ""}><LiaSwimmingPoolSolid></LiaSwimmingPoolSolid></span>
+                    <span className={color === "swimmingpool" ? "text-[#fe4f4d]" : "text-gray-600"}>Pools</span>
                 </div>
-                <div className="flex flex-col items-center cursor-pointer" onClick={()=>filter("boat")}>
-                    <span><FaSailboat></FaSailboat></span>
-                    <span className="font-fredoka">Boats</span>
+                <div className="flex flex-col items-center cursor-pointer font-fredoka" onClick={()=>filter("boat")}>
+                    <span className={color === "boat" ? "text-[#fe4f4d]" : ""}><FaSailboat></FaSailboat></span>
+                    <span className={color === "boat" ? "text-[#fe4f4d]" : "text-gray-600"}>Boats</span>
                 </div>
-                <div className="flex flex-col items-center cursor-pointer" onClick={()=>filter("camping")}>
-                    <span><GiCampingTent></GiCampingTent></span>
-                    <span className="font-fredoka">Camping</span>
+                <div className="flex flex-col items-center cursor-pointer font-fredoka" onClick={()=>filter("camping")}>
+                    <span className={color === "camping" ? "text-[#fe4f4d]" : ""}><GiCampingTent></GiCampingTent></span>
+                    <span className={color === "camping" ? "text-[#fe4f4d]" : "text-gray-600"}>Camping</span>
                 </div>
-                <div className="flex flex-col items-center cursor-pointer" onClick={()=>filter("island")}>
-                    <span><GiIsland></GiIsland></span>
-                    <span className="font-fredoka">Islands</span>
+                <div className="flex flex-col items-center cursor-pointer font-fredoka" onClick={()=>filter("island")}>
+                    <span className={color === "island" ? "text-[#fe4f4d]" : ""}><GiIsland></GiIsland></span>
+                    <span className={color === "island" ? "text-[#fe4f4d]" : "text-gray-600"}>Islands</span>
                 </div>
-                <div className="flex flex-col items-center cursor-pointer" onClick={()=>filter("farm")}>
-                    <span><GiFarmer></GiFarmer></span>
-                    <span className="font-fredoka">Farms</span>
+                <div className="flex flex-col items-center cursor-pointer font-fredoka" onClick={()=>filter("farm")}>
+                    <span className={color === "farm" ? "text-[#fe4f4d]" : ""}><GiFarmer></GiFarmer></span>
+                    <span className={color === "farm" ? "text-[#fe4f4d]" : "text-gray-600"}>Farms</span>
                 </div>
-                <div className="flex flex-col items-center cursor-pointer" onClick={()=>filter("treehouse")}>
-                    <span><GiTreehouse></GiTreehouse></span>
-                    <span className="font-fredoka">Tree Houses</span>
+                <div className="flex flex-col items-center cursor-pointer font-fredoka" onClick={()=>filter("treehouse")}>
+                    <span className={color === "treehouse" ? "text-[#fe4f4d]" : ""}><GiTreehouse></GiTreehouse></span>
+                    <span className={color === "treehouse" ? "text-[#fe4f4d]" : "text-gray-600"}>Tree Houses</span>
                 </div>
-                <div className="flex flex-col items-center cursor-pointer" onClick={()=>filter("beach")}>
-                    <span><FaUmbrellaBeach></FaUmbrellaBeach></span>
-                    <span className="font-fredoka">Beachs</span>
+                <div className="flex flex-col items-center cursor-pointer font-fredoka" onClick={()=>filter("beach")}>
+                    <span className={color === "beach" ? "text-[#fe4f4d]" : ""}><FaUmbrellaBeach></FaUmbrellaBeach></span>
+                    <span className={color === "beach" ? "text-[#fe4f4d]" : "text-gray-600"}>Beachs</span>
                 </div>
             </div>
 
@@ -96,15 +101,19 @@ function HomePage(){
 
             {
                 loading ? <Spinner></Spinner> : 
-                <div>
+                <div className="grid-cols-1 grid gap-x-8 gap-y-10 mx-8 my-10 min-[900px]:grid-cols-3 min-[750px]:grid-cols-2 min-[500px]:mx-20">
                     {
-                        alllisting.length <= 0 ? <div>No post found</div> :
+                        alllisting.length <= 0 ? <div className="font-fredoka">No post found</div> :
                         alllisting.map((list)=>{
                             
-                            return <Card list={list}></Card>
+                            return <div> <Card list={list}></Card> </div>
                         })
                     }
                 </div>
+            }
+
+            {
+                loading ? <></> : <Footer></Footer>
             }
         </div>
     )

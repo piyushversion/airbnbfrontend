@@ -4,6 +4,10 @@ import {toast} from "react-hot-toast";
 import {useNavigate} from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import Spinner from "./Spinner";
+import Footer from "./Footer";
+import { FaUser } from "react-icons/fa";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { MdEmail } from "react-icons/md";
 
 function SignUpPage(){
 
@@ -28,7 +32,7 @@ function SignUpPage(){
         setLoading(true)
         event.preventDefault();
 
-        const formresponse = await fetch("https://airbnbbackend-2.onrender.com/register",{
+        const formresponse = await fetch("https://airbnbbackend1.onrender.com/register",{
 
             method:"POST",
             headers:{
@@ -107,22 +111,47 @@ function SignUpPage(){
             {
 
             loading ? <Spinner></Spinner> : 
-                <div>
-                    <form method="POST" onSubmit={submitHandler}>
+                <div className="flex flex-col-reverse gap-5 items-center mx-8 mb-12 mt-24 border rounded-2xl shadow-[0px_10px_15px_0px_rgb(0,0,0,0.2)] px-4 py-8 min-[1050px]:px-20 min-[1050px]:py-8 min-[950px]:flex-row min-[950px]:gap-0 min-[570px]:mx-20 min-[570px]:mb-12 min-[400px]:px-8">
+
+                    <div className="flex flex-col justify-between w-full text-center min-[950px]:text-justify">
                         
-                        <label htmlFor="username">Username : </label>
-                        <input type="text" name="username" className="border-2 outline-0" onChange={changehandler}></input>
+                        <form method="POST" onSubmit={submitHandler}>
+                            
+                            <div className="flex justify-center items-center gap-1.5 mb-3 min-[950px]:justify-start">
+                                <FaUser size={25} color="gray"></FaUser>
+                                <input type="text" autoComplete="off" required name="username" placeholder="Your Username" className="border-2 text-gray-500 outline-0 font-fredoka rounded px-2.5 py-1.5 bg-white w-[70%] duration-200 focus:border-2 focus:border-[#7c3aed]" onChange={changehandler}></input>
+                            </div>
+                            
+                            <div className="flex justify-center items-center gap-1.5 mb-3 min-[950px]:justify-start">
+                                <MdEmail size={25} color="gray"></MdEmail>
+                                <input type="email" autoComplete="off" required name="email" placeholder="Your Email" className="border-2 text-gray-500 outline-0 font-fredoka rounded px-2.5 py-1.5 bg-white w-[70%] duration-200 focus:border-2 focus:border-[#7c3aed]" onChange={changehandler}></input>
+                            </div>
 
-                        <label htmlFor="email">Email : </label>
-                        <input type="text" name="email" className="border-2 outline-0" onChange={changehandler}></input>
+                            <div className="flex justify-center items-center gap-1.5 mb-3 min-[950px]:justify-start">
+                                <RiLockPasswordFill size={25} color="gray"></RiLockPasswordFill>
+                                <input type="password" autoComplete="off" required name="password" placeholder="Your Password" className="border-2 text-gray-500 outline-0 font-fredoka rounded px-2.5 py-1.5 bg-white w-[70%] duration-200 focus:border-2 focus:border-[#7c3aed]" onChange={changehandler}></input>
+                            </div>
 
-                        <label htmlFor="password">Password : </label>
-                        <input type="password" name="password" className="border-2 outline-0" onChange={changehandler}></input>
+                            <div className="font-fredoka mb-5">Already have an account? <span className="cursor-pointer underline" onClick={()=>navigate("/login")}>Log in</span></div>
 
-                        <input type="submit" value="SignUp" className="cursor-pointer"></input>
-                    </form>
+                            {/* <input type="submit" value="SignUp" className="cursor-pointer font-fredoka text-white bg-[#3b71ca] px-8 py-2 "></input> */}
+
+                            <button className="font-fredoka text-lg group relative inline-block overflow-hidden rounded border border-gray-100 bg-gray-200 px-12 py-2 font-medium text-slate-800 hover:text-violet-600 focus:outline-none focus:ring active:bg-indigo-600 active:text-white">
+                                <span className="ease absolute left-0 top-0 h-0 w-0 border-t-2 border-violet-600 transition-all duration-200 group-hover:w-full"></span>
+                                <span className="ease absolute right-0 top-0 h-0 w-0 border-r-2 border-violet-600 transition-all duration-200 group-hover:h-full"></span>
+                                <span className="ease absolute bottom-0 right-0 h-0 w-0 border-b-2 border-violet-600 transition-all duration-200 group-hover:w-full"></span>
+                                <span className="ease absolute bottom-0 left-0 h-0 w-0 border-l-2 border-violet-600 transition-all duration-200 group-hover:h-full"></span>
+	                            Sign up
+                            </button>
+                        </form>
+                    </div>
+
+                    <div>
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"></img>
+                    </div>
                 </div>
             }  
+            <Footer></Footer>
         </div>
     )
 }

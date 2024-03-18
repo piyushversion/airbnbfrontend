@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import Rating from "./Rating";
 import Navbar from "./Navbar";
 import { IoStarSharp } from "react-icons/io5";
+import Footer from "./Footer";
 
 
 function AllDetails(){
@@ -28,7 +29,7 @@ function AllDetails(){
 
             try{
 
-                const res = await fetch(`https://airbnbbackend-2.onrender.com/getspecifiedlistingid/${id}`,{
+                const res = await fetch(`https://airbnbbackend1.onrender.com/getspecifiedlistingid/${id}`,{
 
                     method:"GET",
                     headers:{
@@ -67,7 +68,7 @@ function AllDetails(){
 
         try{
 
-            const r = await fetch(`https://airbnbbackend-2.onrender.com/deletelisting/${id}`,{
+            const r = await fetch(`https://airbnbbackend1.onrender.com/deletelisting/${id}`,{
 
                 method:"DELETE",
                 headers:{
@@ -117,34 +118,36 @@ function AllDetails(){
             <Navbar></Navbar>
             {
                 loading ? <Spinner></Spinner> :
-                <div>
-                    <div>
-                        <h1>{data.title}</h1>
-                        <img src={data.imageurl}></img>
-                        <p>Owned by {data.userwhomadethislisting.username} </p>
-                        <p>{data.description}</p>
-                        <p><span>&#8377;</span>{numberWithCommas(data.price)} / night</p>
-                        <p>{data.location}</p>
-                        <p>{data.country}</p>
+                <div className="w-[65%] mx-auto mt-[85px] mb-8 font-fredoka min-[700px]:w-[50%]">
+                    <div className="flex flex-col gap-1.5 mt-3">
+                        <h1 className="text-3xl">{data.title}</h1>
+                        <img src={data.imageurl} className="rounded-xl"></img>
+                        <p className="text-xl">Owned by <span className="italic">{data.userwhomadethislisting.username}</span> </p>
+                        <p className="text-xl">{data.description}</p>
+                        <p className="text-xl"><span>&#8377;</span>{numberWithCommas(data.price)} / night</p>
+                        <p className="text-xl capitalize">{data.location}</p>
+                        <p className="text-xl capitalize">{data.country}</p>
                     </div>
                     {
-                        sessionStorage.getItem("id") === data.userwhomadethislisting._id ? <div> <button onClick={()=>navigate(`/alldetails/${id}/edit`)}>Edit</button><button onClick={deletehandler}>Delete</button> </div> : <p></p>
+                        localStorage.getItem("id") === data.userwhomadethislisting._id ? <div className="flex gap-5 my-2"> <button onClick={()=>navigate(`/alldetails/${id}/edit`)} className="text-white bg-[#fe424d] py-1.5 px-6 rounded-md text-lg">Edit</button><button onClick={deletehandler} className="bg-black text-white py-1.5 px-6 rounded-md text-lg">Delete</button> </div> : <p></p>
                     }
                     <Rating id={id} fetchalldetails={fetchalldetails}></Rating>
-                    <div>
+
+                    <div className="text-2xl">All Reviews </div>
+
+                    <div className="grid grid-cols-1 gap-3.5 my-3 min-[520px]:grid-cols-2">
                         {   
-                            data.ratingandreviews.length <=0 ? <div>No Ratings Till Now</div> :
+                            data.ratingandreviews.length <=0 ? <div className="text-xl">No Ratings Till Now</div> :
                             data.ratingandreviews.map((list,index)=>{
 
-                                return <div className="border-2">{data.userwhohasgivenrating[index].username}<div>{[...Array(5)].map((arr,index)=>{return index< list.rating ? <IoStarSharp color="#ffc107"></IoStarSharp> : <IoStarSharp color="#808080"></IoStarSharp> })}</div>{list.reviews}</div>
+                                return <div className="border-2 text-xl px-1.5 py-1 flex flex-col gap-1.5 rounded-md">{"@"}{data.userwhohasgivenrating[index].username}<div className="flex">{[...Array(5)].map((arr,index)=>{return index< list.rating ? <IoStarSharp color="#ffc107" size={30}></IoStarSharp> : <IoStarSharp color="#808080" size={30}></IoStarSharp> })}</div>{list.reviews}</div>
                             })
                         }
                     </div>
                 </div>
             
             }
-
-
+            <Footer></Footer>
         </div>
     )
 }
